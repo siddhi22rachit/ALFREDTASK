@@ -1,5 +1,7 @@
+// SignupPage.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -32,15 +34,69 @@ const SignupPage = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-        <button type="submit">Signup</button>
-      </form>
+    <div className="min-h-screen bg-gray-900">
+      <Navbar />
+      <div className="flex items-center justify-center min-h-screen px-4">
+        <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-xl p-8">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center">Create Account</h2>
+          
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 rounded-lg p-3 mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 
+                  focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 
+                  focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 
+                  focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg 
+                transition-colors font-medium"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-gray-400">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-400 hover:text-blue-300">
+              Log in
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

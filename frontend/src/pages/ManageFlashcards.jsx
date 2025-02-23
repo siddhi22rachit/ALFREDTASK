@@ -1,17 +1,19 @@
+// ManageCard.jsx
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 
 const ManageCard = () => {
-  const { user, token, logout } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [cards, setCards] = useState([]);
   const [newCard, setNewCard] = useState({ question: "", answer: "" });
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (user) {
+    if (token) {
       fetchFlashcards();
     }
-  }, [user]);
+  }, [token]);
 
   const fetchFlashcards = async () => {
     try {
@@ -51,51 +53,54 @@ const ManageCard = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Manage Flashcards</h2>
-        <p className="text-gray-600 mb-4">Welcome, <span className="font-semibold">{user?.name || "Guest"}</span></p>
-        <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
-          Logout
-        </button>
+    <div className="min-h-screen bg-gray-900">
+      <Navbar />
+      <div className="pt-24 px-6 max-w-4xl mx-auto">
+        <div className="bg-gray-800 rounded-lg p-8 shadow-lg">
+          <h2 className="text-3xl font-bold text-white mb-6">Manage Flashcards</h2>
+          
+          {error && <p className="text-red-400 mb-4">{error}</p>}
+          
+          <form onSubmit={handleAddCard} className="mb-8">
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Question"
+                value={newCard.question}
+                onChange={(e) => setNewCard({ ...newCard, question: e.target.value })}
+                className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Answer"
+                value={newCard.answer}
+                onChange={(e) => setNewCard({ ...newCard, answer: e.target.value })}
+                className="w-full p-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+                required
+              />
+              <button 
+                type="submit"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors"
+              >
+                Add Card
+              </button>
+            </div>
+          </form>
 
-        <h3 className="text-xl font-semibold mt-6">Add New Flashcard</h3>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        <form onSubmit={handleAddCard} className="mt-4 space-y-3">
-          <input
-            type="text"
-            placeholder="Question"
-            value={newCard.question}
-            onChange={(e) => setNewCard({ ...newCard, question: e.target.value })}
-            required
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-          />
-          <input
-            type="text"
-            placeholder="Answer"
-            value={newCard.answer}
-            onChange={(e) => setNewCard({ ...newCard, answer: e.target.value })}
-            required
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-          />
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
-            Add Card
-          </button>
-        </form>
-
-        <h3 className="text-xl font-semibold mt-6">Your Flashcards</h3>
-        {cards.length > 0 ? (
-          <ul className="mt-4 space-y-4">
+          <div className="space-y-4">
             {cards.map((card) => (
-              <li key={card._id} className="bg-gray-200 p-4 rounded-md shadow-sm">
-                <strong className="block text-gray-700">Q:</strong> {card.question} <br />
-                <strong className="block text-gray-700 mt-2">A:</strong> {card.answer}
-              </li>
+              <div key={card._id} className="bg-gray-700 p-4 rounded-lg">
+                <p className="text-white"><strong>Que:</strong> {card.question}</p>
+                <p className="text-gray-300 mt-2"><strong>Ans:</strong> {card.answer}</p>
+                <p className="text-gray-300 mt-2"><strong>Ans:</strong> {card.nextReviewDate}</p>
+              </div>
             ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500 mt-4">No flashcards available.</p>
-        )}
+            {cards.length === 0 && (
+              <p className="text-gray-400">No flashcards available.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
