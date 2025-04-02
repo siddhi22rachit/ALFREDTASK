@@ -92,7 +92,7 @@ const ReviewFlashcards = () => {
 
   useEffect(() => {
     const fetchFlashcards = async () => {
-      const response = await fetch("http://localhost:5000/api/flashcards", {
+      const response = await fetch("https://alfredtask-sepia.vercel.app/api/flashcards", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -111,7 +111,7 @@ const ReviewFlashcards = () => {
       setShowError(true);
     }
 
-    await fetch(`http://localhost:5000/api/flashcards/${currentCard._id}`, {
+    await fetch(`http://https://alfredtask-sepia.vercel.app/api/flashcards/${currentCard._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

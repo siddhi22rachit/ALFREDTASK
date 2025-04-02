@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchFlashcards = async () => {
-      const response = await fetch("http://localhost:5000/api/flashcards/date", {
+      const response = await fetch("https://alfredtask-sepia.vercel.app/api/flashcards/date", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
