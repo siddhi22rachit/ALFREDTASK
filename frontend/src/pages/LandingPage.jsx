@@ -11,7 +11,7 @@ const LandingPage = () => {
       <Navbar />
       <div className="flex flex-col items-center justify-center min-h-screen px-4 pt-16">
         <h1 className="text-5xl font-bold text-white mb-8 animate-fade-in">
-          Welcome to <span className="text-blue-400">Flashcard App</span>
+          Welcome to <span className="text-blue-400">Flashcard App Game</span>
         </h1>
         <p className="text-gray-300 text-lg mb-8 max-w-2xl text-center animate-fade-in">
           Boost your learning journey with our interactive flashcard system.
